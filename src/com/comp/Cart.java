@@ -1,7 +1,6 @@
 package com.comp;
 
-import java.util.ArrayList;
-
+import java.util.*;
 public class Cart {
     ArrayList<Product> products;
     ArrayList<Product> shippableProducts;
@@ -12,21 +11,25 @@ public class Cart {
     public boolean isEmpty(){
         return products.isEmpty();
     }
-    public boolean addItem(Product product,ArrayList<Product> stock){
-        for (Product item :stock){
-            if(item.name.equals(product.name)){
-                if(item instanceof Expirable){
-                    if( ((Expirable) item).isExpired()){
+    public boolean addItem(Product product,Map<String, Integer> stock){
+        for (Map.Entry<String, Integer> entry : stock.entrySet()){
+            String item = entry.getKey();
+            Integer stockAmount = entry.getValue();
+            if(item.equals(product.name)){
+                if(product instanceof Expirable){
+                    if( ((Expirable) product).isExpired()){
+                        System.out.println("Cannot add the item as it is Expired ");
                         return false;
                     }
                 }
-                if(item.quantity>= product.quantity){
-                    if(item instanceof Shippable)
-                        this.shippableProducts.add(item);
+                if(stockAmount>= product.quantity){
+                    if(product instanceof Shippable)
+                        this.shippableProducts.add(product);
                     this.products.add(product);
-                    item.quantity-=product.quantity;
+                    entry.setValue(stockAmount-product.quantity);
                     return true;
                 }else{
+                    System.out.println("there is not enough Stock in the Market ");
                     return false;
                 }
             }

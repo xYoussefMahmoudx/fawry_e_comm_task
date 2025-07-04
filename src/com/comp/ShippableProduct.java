@@ -14,6 +14,6 @@ public class ShippableProduct extends Product implements Shippable{
 
     @Override
     public double getWeight() {
-        return this.weight;
+        return this.quantity*this.weight;
     }
 }
