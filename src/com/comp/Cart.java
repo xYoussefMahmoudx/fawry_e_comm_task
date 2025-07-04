@@ -8,9 +8,21 @@ public class Cart {
         products= new ArrayList<>();
     }
     public boolean isEmpty(){
-        return false;
+        return products.isEmpty();
     }
-    public boolean addItem(Product product){
+    public boolean addItem(Product product,ArrayList<Product> stock){
+        for (Product item :stock){
+            if(item.name.equals(product.name)){
+                if(item.quantity>= product.quantity){
+                    this.products.add(product);
+                    item.quantity-=product.quantity;
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+
+        }
         return false;
     }
     public double calculateSubTotal(){

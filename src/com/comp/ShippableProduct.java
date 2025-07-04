@@ -9,11 +9,11 @@ public class ShippableProduct extends Product implements Shippable{
 
     @Override
     public String getName() {
-        return "";
+        return this.name;
     }
 
     @Override
     public float getWeight() {
-        return 0;
+        return this.weight;
     }
 }
