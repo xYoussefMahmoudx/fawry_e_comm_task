@@ -1,16 +1,18 @@
 package com.comp;
 
-import java.util.Date;
+import java.time.LocalDate;
+
 
 public class ExpirableProduct extends Product implements Expirable{
-    Date expDate;
-    ExpirableProduct(String name, double price, int quantity,Date expDate) {
+    LocalDate expDate;
+    ExpirableProduct(String name, double price, int quantity,LocalDate expDate) {
         super(name, price, quantity);
         this.expDate=expDate;
     }
 
     @Override
     public boolean isExpired() {
-        return false;
+        LocalDate currentDate = LocalDate.now();
+        return this.expDate.isBefore(currentDate);
     }
 }
