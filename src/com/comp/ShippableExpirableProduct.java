@@ -4,8 +4,8 @@ import java.time.LocalDate;
 import java.util.Date;
 
 public class ShippableExpirableProduct extends ExpirableProduct implements Shippable{
-    float weight ;
-    ShippableExpirableProduct(String name, double price, int quantity, LocalDate expDate, float weight) {
+    double weight ;
+    ShippableExpirableProduct(String name, double price, int quantity, LocalDate expDate, double weight) {
         super(name, price, quantity, expDate);
         this.weight=weight;
     }
@@ -16,7 +16,7 @@ public class ShippableExpirableProduct extends ExpirableProduct implements Shipp
     }
 
     @Override
-    public float getWeight() {
+    public double getWeight() {
         return this.weight;
     }
 }

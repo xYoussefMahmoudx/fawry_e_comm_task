@@ -1,8 +1,8 @@
 package com.comp;
 
 public class ShippableProduct extends Product implements Shippable{
-    float weight ;
-    ShippableProduct(String name, double price, int quantity,float weight) {
+    double weight ;
+    ShippableProduct(String name, double price, int quantity,double weight) {
         super(name, price, quantity);
         this.weight=weight;
     }
@@ -13,7 +13,7 @@ public class ShippableProduct extends Product implements Shippable{
     }
 
     @Override
-    public float getWeight() {
+    public double getWeight() {
         return this.weight;
     }
 }

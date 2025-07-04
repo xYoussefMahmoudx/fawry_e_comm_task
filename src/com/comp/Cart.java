@@ -13,6 +13,11 @@ public class Cart {
     public boolean addItem(Product product,ArrayList<Product> stock){
         for (Product item :stock){
             if(item.name.equals(product.name)){
+                if(item instanceof Expirable){
+                    if( ((Expirable) item).isExpired()){
+                        return false;
+                    }
+                }
                 if(item.quantity>= product.quantity){
                     this.products.add(product);
                     item.quantity-=product.quantity;
@@ -26,9 +31,25 @@ public class Cart {
         return false;
     }
     public double calculateSubTotal(){
-        return 0.0;
+        double ans=0;
+        for(Product item:products){
+            ans+=(item.price* item.quantity);
+        }
+        return ans;
     }
     public double calculateShipping(){
-        return 0.0;
+        double totalWeight=0;
+        for(Product item:products){
+            if(item instanceof Shippable){
+                totalWeight+=((Shippable) item).getWeight();
+            }
+        }
+        if(totalWeight==0)
+            return 0.0;
+        else if (totalWeight/1000<10) {
+            return 30;
+        }
+        else
+            return 50;
     }
 }
