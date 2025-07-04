@@ -4,8 +4,10 @@ import java.util.ArrayList;
 
 public class Cart {
     ArrayList<Product> products;
+    ArrayList<Product> shippableProducts;
     Cart(){
         products= new ArrayList<>();
+        shippableProducts=new ArrayList<>();
     }
     public boolean isEmpty(){
         return products.isEmpty();
@@ -19,6 +21,8 @@ public class Cart {
                     }
                 }
                 if(item.quantity>= product.quantity){
+                    if(item instanceof Shippable)
+                        this.shippableProducts.add(item);
                     this.products.add(product);
                     item.quantity-=product.quantity;
                     return true;
@@ -37,13 +41,17 @@ public class Cart {
         }
         return ans;
     }
-    public double calculateShipping(){
+
+    public double calculateTotalWeight(){
         double totalWeight=0;
-        for(Product item:products){
-            if(item instanceof Shippable){
-                totalWeight+=((Shippable) item).getWeight();
-            }
+        for(Product item:shippableProducts){
+                totalWeight+= ((Shippable)item).getWeight();
         }
+        return totalWeight;
+    }
+
+    public double calculateShipping(){
+        double totalWeight=calculateTotalWeight();
         if(totalWeight==0)
             return 0.0;
         else if (totalWeight/1000<10) {
